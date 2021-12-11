@@ -1,11 +1,13 @@
 import os 
+import sys
 from colorama import Fore, Style, init
 
 infile_markers = ['totarget']
+new_chunk = 'toreplacewith'
 filetypes = ['.gd']
 ignore_markers = ['.git']
 
-new_chunk = 'toreplacewith'
+basedir = "."
 
 # for colorama
 init()
@@ -80,18 +82,27 @@ def execute_replacement(startpath: str):
 
 def print_main_options():
 	print("-----------")
+	print(Fore.BLUE + "SEARCH: " + ' '.join(infile_markers) + "\nREPLACE: " + new_chunk + "\nfile types: " + ' '.join(filetypes) + "\nignored dirs: " + ' '.join(ignore_markers) + Style.RESET_ALL)
 	print("(1): set blob to search for\n(2): set blob to replace target with\n(3): more search settings")
 	print("(4): view current target setup\n(5): execute current replacements\n(e): exit")
 
 def print_refine_options():
 	print("***********")
+	print("Current settings: ")
+	print(Fore.BLUE + "SEARCH: " + ' '.join(infile_markers) + ", file types: " + ' '.join(filetypes) + ", ignored dirs: " + ' '.join(ignore_markers) + Style.RESET_ALL)
 	print("(1): add blobs to search for\n(2): reset file types\n(3): add file types")
-	print("(4): reset blobs to ignore\n(5): add blobs to ignore\n(e): exit")
+	print("(4): reset blobs to ignore\n(5): add blobs to ignore\n(e): back")
 
 def print_show_options():
 	print("***********")
-	print("(1): print changes per file\n(2): print changes with directory context\n(e): exit")
-	
+	print("(1): print changes per file\n(2): print changes with directory context\n(e): back")
+
+# user supplying different root folder
+if len(sys.argv) > 1:
+	print(Fore.BLUE + "Working at supplied directory " + sys.argv[1] + Style.RESET_ALL)
+	basedir = sys.argv[1]
+else:
+	print(Fore.BLUE + "Working at current directory of refactor.py" + Style.RESET_ALL)
 
 # take some input to do these things
 while True:
@@ -142,9 +153,9 @@ while True:
 			if showop == "e":
 				break
 			elif showop == "1":
-				print_cur_comparison_clean(".")
+				print_cur_comparison_clean(basedir)
 			elif showop == "2":
-				print_cur_comparison(".")
+				print_cur_comparison(basedir)
 		# end sub menu	
 	elif userin == "5":
 		print(Fore.RED + "Finding: " + infile_markers[0])
@@ -153,6 +164,6 @@ while True:
 		if confirm == "n":
 			continue
 		print(Fore.BLUE + "Executing replacements.." + Style.RESET_ALL)
-		execute_replacement(".")
+		execute_replacement(basedir)
 		print(Fore.BLUE + "..Done." + Style.RESET_ALL)
 
