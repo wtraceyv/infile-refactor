@@ -1,11 +1,11 @@
 import os 
 from colorama import Fore, Style, init
 
-infile_markers = ['blah/gun']
+infile_markers = ['totarget']
 filetypes = ['.gd']
 ignore_markers = ['.git']
 
-new_chunk = 'assets/weapons'
+new_chunk = 'toreplacewith'
 
 # for colorama
 init()
