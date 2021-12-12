@@ -29,7 +29,7 @@ def print_cur_comparison(startpath: str):
 			# only interested in specified filetypes 
 			if any(ft in f for ft in filetypes):
 				print('{}{}'.format(subindent, f))
-				toread = open(os.path.join(root, f), "r")
+				toread = open(os.path.join(root, f), "r", encoding="utf8", errors="ignore")
 				for line in toread:
 					if all(im in line for im in infile_markers):
 						infoindent = subindent + ' ' * 2 
@@ -47,7 +47,7 @@ def print_cur_comparison_clean(startpath: str):
 		for f in files:
 			# only interested in specified filetypes 
 			if any(ft in f for ft in filetypes):
-				toread = open(os.path.join(root, f), "r")
+				toread = open(os.path.join(root, f), "r", encoding="utf8", errors="ignore")
 				for line in toread:
 					if all(im in line for im in infile_markers):
 						print(Fore.BLUE + f.replace('\n', ''))
@@ -65,7 +65,7 @@ def execute_replacement(startpath: str):
 		for f in files:
 			# only interested in specified filetypes 
 			if any(ft in f for ft in filetypes):
-				toread = open(os.path.join(root, f), "r")
+				toread = open(os.path.join(root, f), "r", encoding="utf8", errors="ignore")
 				replacement = ""
 				for line in toread:
 					if all(im in line for im in infile_markers):
