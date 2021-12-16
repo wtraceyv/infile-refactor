@@ -70,7 +70,7 @@ def execute_replacement(startpath: str):
 				for line in toread:
 					if all(im in line for im in infile_markers):
 						new_line = line.replace(infile_markers[0], new_chunk)
-						replacement = replacement + new_line + '\n'
+						replacement = replacement + new_line
 						print(Fore.BLUE + new_line.replace('\n', ''))
 					else:
 						replacement = replacement + line 
