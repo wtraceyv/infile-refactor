@@ -1,0 +1,11 @@
+QLabel {
+  color: #eeeeee
+}
+
+Contain {
+  background-color: #232323
+}
+
+QPushButton {
+  
+}
