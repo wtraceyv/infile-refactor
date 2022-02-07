@@ -29,6 +29,14 @@ def gui_color(to_color: str):
             main_widget.bottom.append(l)
         main_widget.bottom.setTextColor(stock)
 
+def set_inputs_for_run():
+    refactor.base_dir = main_widget.inputs.base_dir.text()
+    refactor.infile_markers = []
+    refactor.infile_markers.append(main_widget.inputs.search_for.text())
+    refactor.new_chunk = main_widget.inputs.replace_with.text()
+    refactor.filetypes = main_widget.inputs.file_types_to_search.text().split()
+    refactor.ignore_markers = main_widget.inputs.dirs_to_ignore.text().split()
+
 # Input for what to search for
 class Inputs(QtWidgets.QWidget):
     def __init__(self):
@@ -83,13 +91,14 @@ class Actions(QtWidgets.QWidget):
 
     @QtCore.Slot()
     def tree_report_run(self):
+        set_inputs_for_run()
         result = refactor.get_cur_comparison(refactor.base_dir, True)
         print("Tree report")
-        print(result)
         gui_color(result)
 
     @QtCore.Slot()
     def clean_report_run(self):
+        set_inputs_for_run()
         result = refactor.get_cur_comparison_clean(refactor.base_dir, True)
         print("Clean report")
         gui_color(result)
@@ -97,6 +106,10 @@ class Actions(QtWidgets.QWidget):
     @QtCore.Slot()
     def execute_run(self):
         print("Execute")
+        set_inputs_for_run()
+        result = refactor.execute_replacement(refactor.base_dir)
+        gui_color(result)
+        main_widget.bottom.append("...Replacement complete.")
 
 
 # App container
@@ -124,6 +137,11 @@ class Contain(QtWidgets.QWidget):
         self.all.addWidget(self.bottom)
 
         # Set texts to defaults for examples
+        self.inputs.base_dir.setText(refactor.base_dir)
+        self.inputs.search_for.setText(refactor.infile_markers[0])
+        self.inputs.replace_with.setText(refactor.new_chunk)
+        self.inputs.file_types_to_search.setText(refactor.filetypes[0])
+        self.inputs.dirs_to_ignore.setText(refactor.ignore_markers[0])
 
 
 if __name__ == "__main__":
@@ -135,7 +153,6 @@ if __name__ == "__main__":
     main_widget = Contain()
     main_widget.bottom.setTextColor(myBlue)
     main_widget.bottom.append("Results will appear here")
-
 
     main_widget.resize(800, 600)
     main_widget.show()

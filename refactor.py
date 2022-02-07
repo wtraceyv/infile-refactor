@@ -130,7 +130,7 @@ def execute_replacement(startpath: str):
                     if all(im in line for im in infile_markers):
                         new_line = line.replace(infile_markers[0], new_chunk)
                         replacement = replacement + new_line
-                        replacement_report += Fore.BLUE + new_line
+                        replacement_report += "GUIBLUE" + new_line
                     else:
                         replacement = replacement + line
                 toread.close()
