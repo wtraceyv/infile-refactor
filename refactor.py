@@ -13,7 +13,7 @@ new_chunk = 'toreplacewith'
 filetypes = ['.gd']
 ignore_markers = ['.git']
 
-base_dir = "../gravity-game/client"
+base_dir = "."
 
 # for colorama
 init()
