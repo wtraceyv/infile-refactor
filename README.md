@@ -1,23 +1,31 @@
 # infile-refactor
 
-Current only a cmd version, may work on a simple visual version later.
+Now in GUI form!
+
 Really good for rectifying resource paths in Godot scripts.
 Run with python3, don't know about compatibility with anything earlier.
 
 ### Usage
 
-To install, just run `git clone https://github.com/wtraceyv/infile-refactor.git` and use the included .py file.
+To install, just run `git clone https://github.com/wtraceyv/infile-refactor.git` and use the included .py files.
 
  To use, run 
  
- `python3 refactor.py` 
+ `python3 refactor-gui.py`
  
- with the file in the target directory, or supply a root directory like 
+ or
+ 
+ `python3 refactor-cmd.py`
+ 
+ For the cmd version, it will search the directory it is in, or you can supply a root directory like 
  
 `python3 refactor.py ../git/project`.
 
+### Dependencies
+
+This is not compiled to anything for an OS, you must have python3 and pyside6 via pip for the gui.
+
 -----
 
-![ex1](https://user-images.githubusercontent.com/17349114/145686971-b238f331-8880-4aa1-be0a-93fa65149e5d.png)
-![ex2](https://user-images.githubusercontent.com/17349114/145686972-726e3e2e-47de-4ab0-8d1b-927de1dd301a.png)
-![ex3](https://user-images.githubusercontent.com/17349114/145686974-53b983ae-db3b-40bc-9657-2e046e34f77f.png)
+![gui](https://user-images.githubusercontent.com/17349114/152717949-b15da9fe-7860-4a97-bb93-c24a35dfc66e.png)
+![cmd](https://user-images.githubusercontent.com/17349114/152717955-2d0650d3-df3b-496c-91ce-007bf29040b2.png)
