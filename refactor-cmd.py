@@ -27,7 +27,7 @@ def print_show_options():
 if len(sys.argv) > 1:
     print(Fore.BLUE + "Working at supplied directory " +
           sys.argv[1] + Style.RESET_ALL)
-    refactor.basedir = sys.argv[1]
+    refactor.base_dir = sys.argv[1]
 else:
     print(Fore.BLUE + "Working at current directory of refactor.py" + Style.RESET_ALL)
 
@@ -85,9 +85,9 @@ while True:
             if showop == "e":
                 break
             elif showop == "1":
-                print(refactor.get_cur_comparison_clean(refactor.basedir))
+                print(refactor.get_cur_comparison_clean(refactor.base_dir))
             elif showop == "2":
-                print(refactor.get_cur_comparison(refactor.basedir))
+                print(refactor.get_cur_comparison(refactor.base_dir))
         # end sub menu
     elif userin == "5":
         print(Fore.RED + "Finding: " + refactor.infile_markers[0])
@@ -96,5 +96,5 @@ while True:
         if confirm == "n":
             continue
         print(Fore.BLUE + "Executing replacements.." + Style.RESET_ALL)
-        print(refactor.execute_replacement(refactor.basedir))
+        print(refactor.execute_replacement(refactor.base_dir))
         print(Fore.BLUE + "..Done." + Style.RESET_ALL)

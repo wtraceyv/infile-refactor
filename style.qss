@@ -1,9 +1,15 @@
-QLabel {
-  color: #eeeeee
+Contain {
+  background-color: #232323;
 }
 
-Contain {
-  background-color: #232323
+QTextEdit {
+  background-color: #353535;
+  color: #eeeeee;
+  background-position: top center;
+}
+
+QLabel {
+  color: #eeeeee;
 }
 
 QPushButton {

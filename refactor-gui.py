@@ -1,15 +1,40 @@
-from PySide6 import QtCore, QtWidgets, QtGui
-from colorama import Fore, Style, init
+from PySide6 import QtCore, QtWidgets, QtGui 
 
 import refactor
 import sys
 import random
 
+stock = QtGui.QColor(238,238,238)
+myBlue = QtGui.QColor(32,188,203)
+myRed = QtGui.QColor(247,74,74)
+myGreen = QtGui.QColor(89,208,87)
+
+main_widget = None
+
+def gui_color(to_color: str):
+    lines = str.split(to_color, '\n')
+    main_widget.bottom.setText("")
+    for l in lines:
+        if (len(l.split("GUIBLUE")) > 1):
+            main_widget.bottom.setTextColor(myBlue)
+            main_widget.bottom.append(l.split("GUIBLUE")[1])
+        elif (len(l.split("GUIGREEN")) > 1):
+            main_widget.bottom.setTextColor(myGreen)
+            main_widget.bottom.append(l.split("GUIGREEN")[1])
+            main_widget.bottom.append('\n')
+        elif (len(l.split("GUIRED")) > 1):
+            main_widget.bottom.setTextColor(myRed)
+            main_widget.bottom.append(l.split("GUIRED")[1])
+        else:
+            main_widget.bottom.append(l)
+        main_widget.bottom.setTextColor(stock)
 
 # Input for what to search for
 class Inputs(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
+        self.base_dir = QtWidgets.QLineEdit(self)
+
         self.search_for = QtWidgets.QLineEdit(self)
         self.replace_with = QtWidgets.QLineEdit(self)
         self.file_types_to_search = QtWidgets.QLineEdit(self)
@@ -18,6 +43,8 @@ class Inputs(QtWidgets.QWidget):
         self.column = QtWidgets.QVBoxLayout(self)
 
         # Active searches
+        self.column.addWidget(QtWidgets.QLabel("Directory to use as root for search"))
+        self.column.addWidget(self.base_dir)
         self.column.addWidget(QtWidgets.QLabel("Blob to search for in files"))
         self.column.addWidget(self.search_for)
         self.column.addWidget(QtWidgets.QLabel(
@@ -56,31 +83,27 @@ class Actions(QtWidgets.QWidget):
 
     @QtCore.Slot()
     def tree_report_run(self):
+        result = refactor.get_cur_comparison(refactor.base_dir, True)
         print("Tree report")
+        print(result)
+        gui_color(result)
 
     @QtCore.Slot()
     def clean_report_run(self):
+        result = refactor.get_cur_comparison_clean(refactor.base_dir, True)
         print("Clean report")
+        gui_color(result)
 
     @QtCore.Slot()
     def execute_run(self):
         print("Execute")
 
 
-# Display outputs (in color hopefully)
-class Report(QtWidgets.QWidget):
-    def __init__(self):
-        super().__init__()
-        self.text_block = QtWidgets.QPlainTextEdit(self)
-        self.text_block.setReadOnly(True)
-        self.text_block.setPlainText("Hey there. You should not be able to type here")
-
 # App container
-
-
 class Contain(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
+        # Setup top section
         self.top = QtWidgets.QHBoxLayout(self)
         self.inputs = Inputs()
         self.actions = Actions()
@@ -89,11 +112,18 @@ class Contain(QtWidgets.QWidget):
         topWidget = QtWidgets.QWidget()
         topWidget.setLayout(self.top)
 
-        self.bottom = Report()
+        # Setup bottom section
+        self.bottom = QtWidgets.QTextEdit(self)
+        self.bottom.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
+        self.bottom.setReadOnly(True)
 
+        # arrange both sections
         self.all = QtWidgets.QVBoxLayout(self)
         self.all.addWidget(topWidget)
+        self.all.addWidget(QtWidgets.QLabel("Staged Changes"))
         self.all.addWidget(self.bottom)
+
+        # Set texts to defaults for examples
 
 
 if __name__ == "__main__":
@@ -102,8 +132,12 @@ if __name__ == "__main__":
         _style = f.read()
         app.setStyleSheet(_style)
 
-    widget = Contain()
-    widget.resize(800, 300)
-    widget.show()
+    main_widget = Contain()
+    main_widget.bottom.setTextColor(myBlue)
+    main_widget.bottom.append("Results will appear here")
+
+
+    main_widget.resize(800, 600)
+    main_widget.show()
 
     sys.exit(app.exec())
