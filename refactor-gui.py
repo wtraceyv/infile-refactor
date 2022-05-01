@@ -63,7 +63,7 @@ class Inputs(QtWidgets.QWidget):
         self.column.addWidget(self.file_types_to_search)
 
         # Extra settings
-        self.column.addWidget(QtWidgets.QLabel("Blob to search for in files"))
+        self.column.addWidget(QtWidgets.QLabel("A directory to ignore in search (such as .git)"))
         self.column.addWidget(self.dirs_to_ignore)
 
 
