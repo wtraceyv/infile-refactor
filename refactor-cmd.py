@@ -1,6 +1,14 @@
 from colorama import Fore, Style, init
-import refactor
+from os import system, name
 import sys
+
+import refactor
+
+def screen_clear():
+    if name == 'nt':
+        _ = system('cls')
+    else:
+        _ = system('clear')
 
 def print_main_options():
     print("-----------")
@@ -33,6 +41,7 @@ else:
 
 # take some input to do these things
 while True:
+    screen_clear()
     print_main_options()
     userin = input(Fore.GREEN + "input option >>> " + Style.RESET_ALL)
     if userin == "e":
@@ -50,6 +59,7 @@ while True:
     elif userin == "3":
         # sub menu
         while True:
+            screen_clear()
             print_refine_options()
             refineop = input(
                 Fore.GREEN + "input option >>> " + Style.RESET_ALL)
